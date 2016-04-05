@@ -6,18 +6,6 @@ function setMessage() {
 	document.getElementById("message").innerHTML=score;
 }
 
-// function checkRow(a, b, c, d) {
-// 	var result = false;
-// 	if (getCell(a) == "_" || getCell(b) == "_" || getCell(c) == "_" || getCell(d) == "_") {
-// 		result = true;
-// 	} else if (getCell(a) == getCell(b) != "_") {
-// 		result = true;
-// 	} else if (getCell(b) == getCell(c) != "_") {
-// 		result= true;
-// 	} else if (getCell(c) == getCell(d) != "_")  {
-// 		result = true;
-// 	} return result;
-// }
 
 // new tile distribution: 90% 2, 10% 4//
 function newNumber() {
@@ -30,10 +18,10 @@ function newNumber() {
 }
 function newTile() {
 	for (var s=1; s<17; s++) {
-		if (document.getElementById("c" + s).innerHTML == "_")  {
+		if (document.getElementById("c" + s).innerHTML === "_")  {
 			document.getElementById("c" + s).innerHTML = newNumber();
 			s=s+16;
-		}
+		} console.log(s);
 	}
 }
 
@@ -92,19 +80,19 @@ function slide(al, bl, cl, dl) {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
 	}
-	} 
+}
 }
 
 function slideLRAll(aa, ba, ca, da) {
 	for (var j = 0; j <= 4; j++) {
 	slide(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
-} 
+}
 }
 
 function slideUDAll(au, bu, cu, du) {
 	for (var k = 0; k <=4; k++) {
 	slide(au+ k, bu+k, cu+k, du+k);
-}
+} 
 }
 
 $(document).keydown(function(e) {
@@ -125,4 +113,3 @@ $(document).keydown(function(e) {
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
 });
-
