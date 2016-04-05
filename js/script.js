@@ -20,10 +20,25 @@ function setMessage() {
 // }
 
 // new tile distribution: 90% 2, 10% 4//
+function newNumber() {
+	var prob = Math.random();
+	if(prob <=0.90) {
+		return 2;
+	} else {
+		return 4;
+	}
+}
+function newTile() {
+	for (var s=1; s<=16; s++) {
+		if (document.getElementById("c" + s) == "_")  {
+			document.getElementById("c" + s) = newNumber();
+			s=s+20;
+		}
+	}
+}
 
 
 function slideLR(al, bl, cl, dl) {
-	var slide = false;
 
 	if(getCell(al) == getCell(bl) && getCell(al) != "_") {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
@@ -32,20 +47,18 @@ function slideLR(al, bl, cl, dl) {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide = true;
+		newTile();
 	} if(getCell(bl) == getCell(cl) && getCell(bl) != "_") {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + bl).innerHTML*2;
 		 setMessage(score);
 		score = score + parseInt(document.getElementById("c" + bl).innerHTML);
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide = true;
 	} if(getCell(cl) == getCell(dl) && getCell(cl) != "_") {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + cl).innerHTML*2;
 		 setMessage(score);
 		score = score + parseInt(document.getElementById("c" + cl).innerHTML);
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide = true;
 	} if (getCell(al) == getCell(cl) && getCell(bl) == "_" && getCell(al) != "_") {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
 		 setMessage(score);
@@ -72,16 +85,13 @@ function slideLR(al, bl, cl, dl) {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide = true;
 		} if (document.getElementById("c" + bl).innerHTML == "_") {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide=true;
 		} if (document.getElementById("c" + cl).innerHTML == "_") {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		slide=true;
 	}
 	} return score;
 }
@@ -100,6 +110,7 @@ $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
         slideLRAll(1, 2, 3, 4);
+
 
         case 38: // up
         slideUDAll(1, 5, 9, 13);
