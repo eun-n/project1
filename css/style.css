@@ -1,12 +1,14 @@
 .grid-container {
 	position: absolute;
 	z-index: 1;
-	border: solid gold 5px;
+	border: solid black 5px;
 	border-radius: 10px;
-	background-color: gold;
+	background-color: black;
+	font-weight: bold;
+	color: black;
 }
 .grid-cell {
-	background: silver;
+	background: skyblue;
 	width: 100px;
 	height: 100px;
 	border:1px;
@@ -23,15 +25,4 @@
 body {
 	margin-left: 33%;
 	font-family: helvetica;
-}
-
-.tile-container {
-	width: 100px;
-	height: 100px;
-	border-radius: 15px;
-	background: crimson;
-	position: absolute;
-	z-index: 2;
-	margin-left: 5px;
-	margin-top: 5px;
 }
