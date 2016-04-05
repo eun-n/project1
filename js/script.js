@@ -30,10 +30,10 @@ function newNumber() {
 }
 function newTile() {
 	for (var s=1; s<=16; s++) {
-		if (document.getElementById("c" + s) == "_")  {
-			document.getElementById("c" + s) = newNumber();
+		if (document.getElementById("c" + s).innerHTML == "_")  {
+			document.getElementById("c" + s).innerHTML = newNumber();
 			s=s+20;
-		}
+		} return 0;
 	}
 }
 
@@ -47,7 +47,6 @@ function slideLR(al, bl, cl, dl) {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		newTile();
 	} if(getCell(bl) == getCell(cl) && getCell(bl) != "_") {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + bl).innerHTML*2;
 		 setMessage(score);
@@ -93,24 +92,25 @@ function slideLR(al, bl, cl, dl) {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
 	}
-	} return score;
+	} newTile();
 }
 
 function slideLRAll(aa, ba, ca, da) {
-	for (var j = 0; j <= 4; j++)
+	for (var j = 0; j <= 4; j++) {
 	slideLR(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
+} 
 }
 
 function slideUDAll(au, bu, cu, du) {
-	for (var k = 0; k <=4; k++)
+	for (var k = 0; k <=4; k++) {
 	slideLR(au+ k, bu+k, cu+k, du+k);
+}
 }
 
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
         slideLRAll(1, 2, 3, 4);
-
 
         case 38: // up
         slideUDAll(1, 5, 9, 13);
