@@ -29,16 +29,16 @@ function newNumber() {
 	}
 }
 function newTile() {
-	for (var s=1; s<=16; s++) {
+	for (var s=1; s<17; s++) {
 		if (document.getElementById("c" + s).innerHTML == "_")  {
 			document.getElementById("c" + s).innerHTML = newNumber();
-			s=s+20;
-		} return 0;
+			s=s+16;
+		}
 	}
 }
 
 
-function slideLR(al, bl, cl, dl) {
+function slide(al, bl, cl, dl) {
 
 	if(getCell(al) == getCell(bl) && getCell(al) != "_") {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
@@ -92,18 +92,18 @@ function slideLR(al, bl, cl, dl) {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
 	}
-	} newTile();
+	} 
 }
 
 function slideLRAll(aa, ba, ca, da) {
 	for (var j = 0; j <= 4; j++) {
-	slideLR(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
+	slide(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
 } 
 }
 
 function slideUDAll(au, bu, cu, du) {
 	for (var k = 0; k <=4; k++) {
-	slideLR(au+ k, bu+k, cu+k, du+k);
+	slide(au+ k, bu+k, cu+k, du+k);
 }
 }
 
@@ -125,3 +125,4 @@ $(document).keydown(function(e) {
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
 });
+
