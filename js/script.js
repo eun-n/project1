@@ -2,7 +2,7 @@
 function getCell(number) {
 	return document.getElementById("c" + number).innerHTML;
 }
-//score variable, points are calculated by adding combined values (so combining 2 + 2 will give you 4 points)
+//score variable, points are added to the score when numbers are combined (combining 2 + 2 will give you 4 points)
 var score = 0;
 //function to display current score on the page
 function setMessage() {
@@ -10,7 +10,7 @@ function setMessage() {
 }
 
 
-// new tile distribution: 90% 2, 10% 4//
+// new tile distribution: 2: 90%, 4: 10%//
 function newNumber() {
 	var prob = Math.random();
 	if(prob <=0.90) {
@@ -22,100 +22,155 @@ function newNumber() {
 
 //function to create a new tile, still not balanced for probability across blank tiles
 function newTile() {
+	var emptyCells = [];
 	for (var s=1; s<17; s++) {
-		if (document.getElementById("c" + s).innerHTML === "_")  {
+		var cell = document.getElementById("c" + s);
+		if (cell.innerHTML === "_")  {
+			emptyCells.push(cell)
 			document.getElementById("c" + s).innerHTML = newNumber();
 			s=s+16;
-		} console.log(s);
+		}
 	}
+
+	var index = Math.floor(Math.random() * cells.length);
+	var choice = emptyCells[index];
+	choice.innerHTML = 
+
 }
 
 //function for sliding rules for cells when there are duplicates or blank cells
 // did not use "else if" statements as multiple lines will need to execute simultaneously
 function slide(al, bl, cl, dl) {
 
-	//cells al and bl can be combined xx__
-	if(getCell(al) == getCell(bl) && getCell(al) != "_") {
+	var numOfCalcs = 0;
+
+	//cells al and bl can be combined x x _ _
+	if(getCell(al) == getCell(bl) && getCell(al) != "_" && numOfCalcs < 2) {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
 		score = score + parseInt(document.getElementById("c" + al).innerHTML);
 		 setMessage(score);
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
 
-		//cells bl and cl can be combined zxx_
-	} if(getCell(bl) == getCell(cl) && getCell(bl) != "_") {
-		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + bl).innerHTML*2;
-		 setMessage(score);
-		score = score + parseInt(document.getElementById("c" + bl).innerHTML);
-		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
-		document.getElementById("c" + dl).innerHTML = "_";
+		aCacled = true;
+	}
 
-		//cells cl and dl can be combined zcxx
-	} if(getCell(cl) == getCell(dl) && getCell(cl) != "_") {
-		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + cl).innerHTML*2;
-		 setMessage(score);
-		score = score + parseInt(document.getElementById("c" + cl).innerHTML);
-		document.getElementById("c" + dl).innerHTML = "_";
-
-		//cells al and cl can be combined if bl is blank x_xz
-	} if (getCell(al) == getCell(cl) && getCell(bl) == "_" && getCell(al) != "_") {
+	if (getCell(al) == getCell(cl) && getCell(bl) == "_" && getCell(al) != "_" && numOfCalcs < 2) {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
 		 setMessage(score);
 		score = score + parseInt(document.getElementById("c" + al).innerHTML);
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = "_";
 		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
 
-		//cells bl and dl can be combined if cl is blank zx_x
-	} if (getCell(bl) == getCell(dl) && getCell(cl) == "_" && getCell(bl) != "_") {
+		//cells bl and cl can be combined z x x _
+	}
+
+	if(getCell(bl) == getCell(cl) && getCell(bl) != "_" && numOfCalcs < 2) {
+		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + bl).innerHTML*2;
+		 setMessage(score);
+		score = score + parseInt(document.getElementById("c" + bl).innerHTML);
+		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
+		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
+
+		//cells cl and dl can be combined z c x x
+	}
+
+	if(getCell(cl) == getCell(dl) && getCell(cl) != "_" && numOfCalcs < 2) {
+		console.log('c and d equal');
+		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + cl).innerHTML*2;
+		 setMessage(score);
+		score = score + parseInt(document.getElementById("c" + cl).innerHTML);
+		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
+
+		//cells al and cl can be combined if bl is blank x _ x z
+	}  
+
+	if (getCell(bl) == getCell(dl) && getCell(cl) == "_" && getCell(bl) != "_" && numOfCalcs < 2 ) {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + bl).innerHTML*2;
 		 setMessage(score);
 		score = score + parseInt(document.getElementById("c" + bl).innerHTML);
 		document.getElementById("c" + cl).innerHTML = "_";
 		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
 
 		//cells al and dl can be combined in bl and cl are blank x _ _ x
-	}if (getCell(al) == getCell(dl) && getCell(bl) == getCell(cl) && getCell(bl) =="_" && getCell(al) != "_") {
+	}
+
+	if (getCell(al) == getCell(dl) && getCell(bl) == getCell(cl) && getCell(bl) =="_" && getCell(al) != "_" && numOfCalcs < 2) {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + al).innerHTML*2;
 		 setMessage(score);
 		score = score + parseInt(document.getElementById("c" + al).innerHTML);
 		document.getElementById("c" + bl).innerHTML = "_";
 		document.getElementById("c" + cl).innerHTML = "_";
 		document.getElementById("c" + dl).innerHTML = "_";
+		numOfCalcs++
 
 		//shifts everything over if there are blank spaces
-	} for (var i = 0; i<=1; i++) {
+		//used a for loop to make sure they shifted over completely for consecutive blank spaces
+	} 
+
+	for (var i = 0; i<=1; i++) {
+		
 		if (document.getElementById("c" + al).innerHTML == "_") {
 		document.getElementById("c" + al).innerHTML = document.getElementById("c" + bl).innerHTML;
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		} if (document.getElementById("c" + bl).innerHTML == "_") {
+		} 
+
+		if (document.getElementById("c" + bl).innerHTML == "_") {
 		document.getElementById("c" + bl).innerHTML = document.getElementById("c" + cl).innerHTML;
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
-		} if (document.getElementById("c" + cl).innerHTML == "_") {
+		} 
+
+		if (document.getElementById("c" + cl).innerHTML == "_") {
 		document.getElementById("c" + cl).innerHTML = document.getElementById("c" + dl).innerHTML;
 		document.getElementById("c" + dl).innerHTML = "_";
 	}
 }
 }
 
-//sliding functions for rows, the for loop makes it apply across multiple rows
+function getCells(a, b, c, d) {
+  var cells = [
+  	getCell(a),
+  	getCell(b),
+  	getCell(c),
+  	getCell(d),
+  ]
+
+  cells = cells.filter(function(cell) {
+  	return cell != "_";
+  }).map(function(cell) {
+    return parseInt(cell, 10);
+  })
+
+  return cells;
+}
+
+//sliding functions for rows, the for loop applies it across multiple rows
 function slideLRAll(aa, ba, ca, da) {
 	for (var j = 0; j <= 4; j++) {
-	slide(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
-}
+
+		var cells = getCells(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
+		console.log(cells);
+
+		slide(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
+	}
 }
 
-//sliding functions for columns, the for loop makes it apply across multiple columns
-function slideUDAll(au, bu, cu, du) {
+//sliding functions for columns, the for loop applies it across multiple columns
+function slideUDAll(az, bz, cz, dz) {
 	for (var k = 0; k <=4; k++) {
-	slide(au+ k, bu+k, cu+k, du+k);
-} 
+	slide(az+ k, bz+k, cz+k, dz+k);
 }
-
+}
 //calls sliding functions depending on the directional buttons
 $(document).keydown(function(e) {
     switch(e.which) {
