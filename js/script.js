@@ -103,7 +103,6 @@ function checkMove() {
 		newTile();
 	}
 }
-
 //function to slide over cells by creating an array per row/column, and combining numbers if they are adjacent or separated by a blank tile
 function slideCells(a, b, c, d) {
 	  var cells = [
@@ -152,9 +151,8 @@ function slideCells(a, b, c, d) {
 //slides cells horizontally across multiple rows
 function slideHorizontal(aa, ba, ca, da) {
 	for (var j = 0; j <= 4; j++) {
-
 		slideCells(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
-	}
+	} 
 }
 
 //slides cells vertically across multiple columns
@@ -164,27 +162,62 @@ function slideVertical(az, bz, cz, dz) {
 }
 }
 
+function functionh(w, x, y, z) {
+	var first = false;
+	var second = false;
+	var third = false;
+	if(first == false) {
+		prevBoard();
+		first = true;
+	}
 
+	if(first==true && second == false) {
+		slideHorizontal(w, x, y, z);
+		second = true;
+	}
+
+	if(first == true && second == true && third == false) {
+		checkMove();
+		third = true;
+	}
+
+}
+
+function functionv(w, x, y, z) {
+	var first = false;
+	var second = false;
+	if(first == false) {
+		prevBoard();
+		first = true;
+	}
+
+	if(first==true && second == false) {
+		slideVertical(w, x, y, z);
+		second = true;
+	}
+
+}
 // //calls sliding functions depending on the directional buttons
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
-        prevBoard();
-        slideHorizontal(1, 2, 3, 4);
+        functionh(1, 2, 3, 4);
 
         case 38: // up
-        prevBoard();
-        slideVertical(1, 5, 9, 13);
+        functionv(1, 5, 9, 13);
 
         case 39: // right
-        prevBoard();
-        slideHorizontal(4, 3, 2, 1);
+        functionh(4, 3, 2, 1);
 
         case 40: // down
-        prevBoard();
-        slideVertical(13, 9, 5, 1);
+        functionv(13, 9, 5, 1);
 
         default: return;
     }
+    e.preventDefault(); //prevents default action
+});
+
+$(document).keyup(function(e) {
+        checkMove();
     e.preventDefault(); //prevents default action
 });
