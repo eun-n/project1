@@ -129,7 +129,7 @@ function slideCells(a, b, c, d) {
 		}
 	}
 //inserted newly created array back into the html and placed "_" where the array has no value
-//created a flag for each operation so that the checkMove() would activate once the table was completely filled
+//flag created issues, currently working on an alternative method
 	if (cells[0]) {
 		document.getElementById("c" + a).innerHTML = cells[0];
 	} else document.getElementById("c" + a).innerHTML =  "_";
@@ -157,19 +157,14 @@ function slideHorizontal(aa, ba, ca, da) {
 
 		slideCells(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
 		flag = flag + 1;
-	} if (flag ==4) {
-		checkMove();
 	}
 }
 
 //slides cells vertically across multiple columns
 function slideVertical(az, bz, cz, dz) {
-	var flag = 0;
 	for (var k = 0; k <=4; k++) {
 	slideCells(az+ k, bz+k, cz+k, dz+k);
 	flag = flag +1;
-} if (flag == 4) {
-	checkMove();
 }
 }
 
