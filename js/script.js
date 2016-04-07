@@ -71,6 +71,7 @@ function newNumber() {
 //randomly selects an available tile and inserts the number generated from newNumber() 
 function newTile() {
 	var emptyCells = [];
+	for (var x=0; x<1; x++) {
  	for (var s=1; s<17; s++) {
 		if (document.getElementById("c" + s).innerHTML === "_")  {
 		var cell = document.getElementById("c" + s);
@@ -83,8 +84,7 @@ function newTile() {
 	var index = Math.floor(Math.random() * emptyCells.length);
 	var choice = emptyCells[index];
 	choice.innerHTML = newNumber();
-	console.log(choice);
-
+	}
  }
 //starts the game by generating 2 random tiles
  function startGame() {
@@ -103,6 +103,7 @@ function checkMove() {
 		newTile();
 	}
 }
+
 //function to slide over cells by creating an array per row/column, and combining numbers if they are adjacent or separated by a blank tile
 function slideCells(a, b, c, d) {
 	  var cells = [
@@ -111,7 +112,7 @@ function slideCells(a, b, c, d) {
 		  	getCell(c),
 		  	getCell(d),
 		  	]
-	var flag = 0;
+
 //removed the "_" cells from the array
   	cells = cells.filter(function(cell) {
   		return cell != "_";
@@ -131,47 +132,44 @@ function slideCells(a, b, c, d) {
 //created a flag for each operation so that the checkMove() would activate once the table was completely filled
 	if (cells[0]) {
 		document.getElementById("c" + a).innerHTML = cells[0];
-		flag = flag + 1;
 	} else document.getElementById("c" + a).innerHTML =  "_";
-		flag = flag + 1;
 	if (cells[1]) {
 		document.getElementById("c" + b).innerHTML = cells[1];
-		flag = flag + 1;
 	} else document.getElementById("c" + b).innerHTML =  "_";
-		flag = flag + 1;
 
 	if (cells[2]) {
 		document.getElementById("c" + c).innerHTML = cells[2];
-		flag = flag + 1;
 	} else document.getElementById("c" + c).innerHTML =  "_";
-		flag = flag + 1;
 
 	if (cells[3]) {
 		document.getElementById("c" + d).innerHTML = cells[3];
-		flag = flag + 1;
 	} else document.getElementById("c" + d).innerHTML =  "_";
-		flag = flag + 1;
  	afterBoard();
 
- 	if(flag ==4) {
- 		checkMove();
- 	}
 
 }
 
 
 //slides cells horizontally across multiple rows
 function slideHorizontal(aa, ba, ca, da) {
+	var flag = 0;
 	for (var j = 0; j <= 4; j++) {
 
 		slideCells(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
+		flag = flag + 1;
+	} if (flag ==4) {
+		checkMove();
 	}
 }
 
 //slides cells vertically across multiple columns
 function slideVertical(az, bz, cz, dz) {
+	var flag = 0;
 	for (var k = 0; k <=4; k++) {
 	slideCells(az+ k, bz+k, cz+k, dz+k);
+	flag = flag +1;
+} if (flag == 4) {
+	checkMove();
 }
 }
 
@@ -182,22 +180,18 @@ $(document).keydown(function(e) {
         case 37: // left
         prevBoard();
         slideHorizontal(1, 2, 3, 4);
-	  		// checkMove();
 
         case 38: // up
         prevBoard();
         slideVertical(1, 5, 9, 13);
-        // checkMove();
 
         case 39: // right
         prevBoard();
         slideHorizontal(4, 3, 2, 1);
-        // checkMove();
 
         case 40: // down
         prevBoard();
         slideVertical(13, 9, 5, 1);
-        // checkMove();
 
         default: return;
     }
