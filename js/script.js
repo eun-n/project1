@@ -58,13 +58,46 @@ function afterBoard() {
 return bstring;
 }
 
+function newNumber() {
+	var num = Math.random();
+	if (num < 0.9) {
+		return 2;
+	} else {
+		return 4;
+	}
+}
+
+function newTile() {
+	var emptyCells = [];
+ 	for (var s=1; s<17; s++) {
+		if (document.getElementById("c" + s).innerHTML === "_")  {
+		var cell = document.getElementById("c" + s);
+		if (cell.innerHTML === "_")  {
+			emptyCells.push(cell)
+		}
+		}
+ 	}
+
+	var index = Math.floor(Math.random() * emptyCells.length);
+	var choice = emptyCells[index];
+	choice.innerHTML = newNumber();
+	console.log(choice);
+
+ }
+
+ function startGame() {
+ 	for (var i=0; i<2; i++) {
+ 		newTile();
+ 	}
+ }
+
 function checkMove() {
 	if(astring === bstring) {
 		return false;
 	} else if (bstring == null) {
 		return false;
 	} else {
-		return true;
+		newTile();
 	}
 }
 
@@ -123,28 +156,29 @@ function slideVertical(az, bz, cz, dz) {
 	slideCells(az+ k, bz+k, cz+k, dz+k);
 }
 }
+
 // //calls sliding functions depending on the directional buttons
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
         prevBoard();
         slideHorizontal(1, 2, 3, 4);
-        // checkMove();
+        checkMove();
 
         case 38: // up
         prevBoard();
         slideVertical(1, 5, 9, 13);
-        // checkMove();
+        checkMove();
 
         case 39: // right
         prevBoard();
         slideHorizontal(4, 3, 2, 1);
-        // checkMove();
+        checkMove();
 
         case 40: // down
         prevBoard();
         slideVertical(13, 9, 5, 1);
-        // checkMove();
+        checkMove();
 
         default: return;
     }
