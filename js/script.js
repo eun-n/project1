@@ -161,7 +161,7 @@ function slideVertical(az, bz, cz, dz) {
 	slideCells(az+ k, bz+k, cz+k, dz+k);
 }
 }
-
+//function to shift tiles left and right, made sure to have prevBoard execute first
 function functionh(w, x, y, z) {
 	var first = false;
 	var second = false;
@@ -182,7 +182,7 @@ function functionh(w, x, y, z) {
 	}
 
 }
-
+//function to shift tiles up and down, made sure to have prevBoard execute first
 function functionv(w, x, y, z) {
 	var first = false;
 	var second = false;
@@ -217,6 +217,8 @@ $(document).keydown(function(e) {
     e.preventDefault(); //prevents default action
 });
 
+
+//created keyup detector to call the check move function to call a new tile if the board changed
 $(document).keyup(function(e) {
         checkMove();
     e.preventDefault(); //prevents default action
