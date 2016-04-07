@@ -8,7 +8,7 @@ var score = 0;
 function setMessage() {
 	document.getElementById("message").innerHTML=score;
 }
-
+//gets the state of the board before a move in the form of a string
 function prevBoard() {
 var aboard = [
 	getCell(1),
@@ -33,7 +33,7 @@ astring = aboard.toString();
 return astring;
 }
 
-
+//gets the state of the board immediately after a move in the form of a string
 function afterBoard() {
 	var bboard = [
 	getCell(1),
@@ -58,6 +58,7 @@ function afterBoard() {
 return bstring;
 }
 
+//generates a new number with a 90% probability of being 2, and 10% prob of being 4
 function newNumber() {
 	var num = Math.random();
 	if (num < 0.9) {
@@ -67,6 +68,7 @@ function newNumber() {
 	}
 }
 
+//randomly selects an available tile and inserts the number generated from newNumber() 
 function newTile() {
 	var emptyCells = [];
  	for (var s=1; s<17; s++) {
@@ -84,13 +86,14 @@ function newTile() {
 	console.log(choice);
 
  }
-
+//starts the game by generating 2 random tiles
  function startGame() {
  	for (var i=0; i<2; i++) {
  		newTile();
  	}
  }
-
+//checks to see if any valid moves were made on the board (valid move is detected when the board changes)
+//if there was a move, a new tile would be generated
 function checkMove() {
 	if(astring === bstring) {
 		return false;
@@ -100,7 +103,7 @@ function checkMove() {
 		newTile();
 	}
 }
-
+//function to slide over cells by creating an array per row/column, and combining numbers if they are adjacent or separated by a blank tile
 function slideCells(a, b, c, d) {
 	  var cells = [
 		  	getCell(a),
@@ -109,13 +112,13 @@ function slideCells(a, b, c, d) {
 		  	getCell(d),
 		  	]
 	var flag = 0;
-
+//removed the "_" cells from the array
   	cells = cells.filter(function(cell) {
   		return cell != "_";
  		 }).map(function(cell) {
     		return parseInt(cell, 10);
   		})
- 	
+ 	//checked for possible number combinations and combined them
 	for (var i=0; i<cells.length; i++)  {
 		if(cells[i] == cells[i+1]) {
 			cells[i] = cells[i]*2;
@@ -124,7 +127,8 @@ function slideCells(a, b, c, d) {
 			cells.splice(i+1, 1);
 		}
 	}
-
+//inserted newly created array back into the html and placed "_" where the array has no value
+//created a flag for each operation so that the checkMove() would activate once the table was completely filled
 	if (cells[0]) {
 		document.getElementById("c" + a).innerHTML = cells[0];
 		flag = flag + 1;
@@ -178,22 +182,22 @@ $(document).keydown(function(e) {
         case 37: // left
         prevBoard();
         slideHorizontal(1, 2, 3, 4);
-	  		checkMove();
+	  		// checkMove();
 
         case 38: // up
         prevBoard();
         slideVertical(1, 5, 9, 13);
-        checkMove();
+        // checkMove();
 
         case 39: // right
         prevBoard();
         slideHorizontal(4, 3, 2, 1);
-        checkMove();
+        // checkMove();
 
         case 40: // down
         prevBoard();
         slideVertical(13, 9, 5, 1);
-        checkMove();
+        // checkMove();
 
         default: return;
     }
