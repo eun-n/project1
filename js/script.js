@@ -195,7 +195,14 @@ function functionv(w, x, y, z) {
 		slideVertical(w, x, y, z);
 		second = true;
 	}
+}
 
+function checkGame() {
+	for (var i=1; i<17; i++) {
+		if(getCell(i)==2048) {
+			alert("You win!");
+		}
+	}
 }
 // //calls sliding functions depending on the directional buttons
 $(document).keydown(function(e) {
@@ -221,5 +228,9 @@ $(document).keydown(function(e) {
 //created keyup detector to call the check move function to call a new tile if the board changed
 $(document).keyup(function(e) {
         checkMove();
+    e.preventDefault(); //prevents default action
+});
+$(document).keyup(function(e) {
+        checkGame();
     e.preventDefault(); //prevents default action
 });
