@@ -108,6 +108,7 @@ function slideCells(a, b, c, d) {
 		  	getCell(c),
 		  	getCell(d),
 		  	]
+	var flag = 0;
 
   	cells = cells.filter(function(cell) {
   		return cell != "_";
@@ -121,26 +122,39 @@ function slideCells(a, b, c, d) {
 			score = score + cells[i]
 			setMessage(score);
 			cells.splice(i+1, 1);
-			move = true;
 		}
+	}
 
 	if (cells[0]) {
 		document.getElementById("c" + a).innerHTML = cells[0];
+		flag = flag + 1;
 	} else document.getElementById("c" + a).innerHTML =  "_";
+		flag = flag + 1;
 	if (cells[1]) {
 		document.getElementById("c" + b).innerHTML = cells[1];
+		flag = flag + 1;
 	} else document.getElementById("c" + b).innerHTML =  "_";
+		flag = flag + 1;
 
 	if (cells[2]) {
 		document.getElementById("c" + c).innerHTML = cells[2];
+		flag = flag + 1;
 	} else document.getElementById("c" + c).innerHTML =  "_";
+		flag = flag + 1;
 
 	if (cells[3]) {
 		document.getElementById("c" + d).innerHTML = cells[3];
+		flag = flag + 1;
 	} else document.getElementById("c" + d).innerHTML =  "_";
+		flag = flag + 1;
+ 	afterBoard();
 
-} afterBoard();
+ 	if(flag ==4) {
+ 		checkMove();
+ 	}
+
 }
+
 
 //slides cells horizontally across multiple rows
 function slideHorizontal(aa, ba, ca, da) {
@@ -157,13 +171,14 @@ function slideVertical(az, bz, cz, dz) {
 }
 }
 
+
 // //calls sliding functions depending on the directional buttons
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
         prevBoard();
         slideHorizontal(1, 2, 3, 4);
-        checkMove();
+	  		checkMove();
 
         case 38: // up
         prevBoard();
