@@ -146,17 +146,14 @@ function slideCells(a, b, c, d) {
 	} else document.getElementById("c" + d).innerHTML =  "_";
  	afterBoard();
 
-
 }
 
 
 //slides cells horizontally across multiple rows
 function slideHorizontal(aa, ba, ca, da) {
-	var flag = 0;
 	for (var j = 0; j <= 4; j++) {
 
 		slideCells(aa+ j*4, ba+j*4, ca+j*4, da+j*4);
-		flag = flag + 1;
 	}
 }
 
@@ -164,7 +161,6 @@ function slideHorizontal(aa, ba, ca, da) {
 function slideVertical(az, bz, cz, dz) {
 	for (var k = 0; k <=4; k++) {
 	slideCells(az+ k, bz+k, cz+k, dz+k);
-	flag = flag +1;
 }
 }
 
