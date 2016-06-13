@@ -2,7 +2,7 @@
   "name": "project1",
   "version": "1.0.0",
   "description": "This is a game based off of the popular 2048 game by Gabriele Cirulli.  This was created using HTML, CSS, jQuery and Javascript in the Sublime text editor.",
-  "main": "script.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
