@@ -4,7 +4,8 @@
   "description": "This is a game based off of the popular 2048 game by Gabriele Cirulli.  This was created using HTML, CSS, jQuery and Javascript in the Sublime text editor.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
